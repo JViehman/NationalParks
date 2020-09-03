@@ -6,8 +6,7 @@
 
 
 
-### Data for park locations and visitations were collected using the National Parks Service API. 
-
+### Data for park locations and visitations were collected using the [National Parks Service API](https://www.nps.gov/subjects/developer/api-documentation.htm) in conjunction with the [IRMA STATS](https://irma.nps.gov/STATS/) reporting portal curated by the NPS. 
 
 ### Supplemental climate data for the same twenty year time span was gathered from _____.
 
