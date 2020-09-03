@@ -1,0 +1,11 @@
+What is the problem you are proposing to work on?
+
+For the project, I want to build a generalized forecasting model for the monthly visitation of the 63 National Parks using a range of covariates (weather, size, activities, cost, etc). The rationale being that for the National Parks System to develop separate forecasting models for each separate park would be largely redundant work, but having a method of forecasting visitation would be immensely useful in operational plannning.
+
+What data will you be using and from where?
+
+To that end, I propose we use the National Park Service REST API for park metadata as well as their reporting system for visitation statistics and park size as the foundational data for forecasting visitation. My groupmates are looking into additional covariates from other data sources such as monthly average weather (NOAA) and state poverty indecies (Census Bureau).
+
+How will you go about solving the problem?
+
+Currently we are anticipating this will involve some time series such as a seasonal ARIMA, however based on some preliminary research we believe a neural net could prove to be more useful for forecasting visitation. So at least part of our project will involve comparing the two methods to see which performs better.
