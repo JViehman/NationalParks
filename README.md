@@ -1,8 +1,15 @@
-# national_parks
-Predicting monthly visits to National Parks using a variety of methods
+# National Parks Project
 
-## Data for park locations and visitations were collected using the National Parks Service API. 
+## Aubrey Smiley McAuliffe, Beau Findley, and Jason Viehman
 
-## Supplemental climate data for the same twenty year time span was gathered from _____.
+### Predicting monthly visits to National Parks using a variety of methods
 
-## Economic data and poverty measures for states during those years was compiled from Census Bureau archival data.
+
+
+### Data for park locations and visitations were collected using the National Parks Service API. 
+
+
+### Supplemental climate data for the same twenty year time span was gathered from _____.
+
+
+### Economic data and poverty measures for states during those years was compiled from Census Bureau archival data.
