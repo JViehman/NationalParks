@@ -11,4 +11,4 @@
 ### Supplemental climate data for the same twenty year time span was gathered from _____.
 
 
-### Economic data and poverty measures for states during those years was compiled from Census Bureau archival data.
+### Economic data and poverty measures for states during those years was compiled from [Census Bureau SAIPE archival data](https://www.census.gov/programs-surveys/saipe/data/datasets.All.html).
