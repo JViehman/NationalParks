@@ -1,0 +1,56 @@
+---
+title: "Merging NPS and Poverty"
+author: "Aubrey Smiley"
+date: "9/11/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE, echo=FALSE}
+options(repos = c(CRAN = "http://cran.rstudio.com"))
+```
+
+```{r loadingPackages, message=FALSE, warning = FALSE, results = "hide"}
+library(dplyr)
+```
+
+```{r}
+Parks <- read.csv("~/GitHub/national_parks/Data Files/NPS_master_Parks_1990to2019.csv")
+Poverty <- read_excel("~/GitHub/national_parks/Data Files/state_poverty_1995-2018.xlsx")
+```
+
+```{r}
+print("Data Fields in NPS Dataframe")
+colnames(Parks)
+```
+```{r}
+print("Data Fields in Poverty Dataframe")
+colnames(Poverty)
+```
+
+
+```{r}
+Poverty = Poverty %>% 
+  rename(States = `Postal Code`) %>%
+  select(-c(`State FIPS Code`, `Name`))
+colnames(Poverty)
+```
+
+```{r}
+Parks = Parks %>% filter(Year >= 1995 & Year <= 2018)
+```
+
+
+```{r}
+merged <- merge(Parks,Poverty,by=c("States","Year"))
+head(merged, 10)
+tail(merged, 10)
+```
+
+
+```{r}
+write.csv(merged,"~/GitHub/national_parks/Data Files/NPS_with_Poverty_1995-2018.csv", row.names = FALSE)
+```
