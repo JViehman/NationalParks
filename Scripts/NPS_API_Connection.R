@@ -42,9 +42,9 @@ nps_api_parks <- function(state=NULL){
       raw$topics <- sapply(raw$topics, function(x) ifelse(nrow(x[0])==0, NA, x[2]))
       raw$topics <- sapply(raw$topics, function(x) paste0(x, collapse = ", "))
       # Restructure the JSON cost column
-      raw$entranceFees = unlist(flatten(lapply(raw$entranceFees, function(x) ifelse(nrow(x[0])==0, NA, paste0(x[[3]], " (>", x[[1]], "<)", collapse = ", ")))))
+      raw$entranceFees = unlist(flatten(lapply(raw$entranceFees, function(x) ifelse(nrow(x[0])==0, NA, paste0(x[[3]], " (", x[[1]], ")", collapse = ", ")))))
       # Restructure the JSON Zip Code column
-      raw$City = unlist(flatten(lapply(raw$addresses, function(x) ifelse(nrow(x[0])==0, NA, x[[2]][1]))))
+      raw$City = unlist(lapply(raw$addresses, function(x) ifelse(nrow(x[0])==0, NA, x[[2]][1])))
       raw$ZipCode = unlist(flatten(lapply(raw$addresses, function(x) ifelse(nrow(x[0])==0, NA, x[[1]][1]))))
       # Iteratively add on to the dataset
       nps_parks[[states[i]]] <- as_tibble(raw) %>% select(id, name, fullName, designation, parkCode, states, City, ZipCode, latitude, longitude, activities, topics, entranceFees)
@@ -123,34 +123,6 @@ nps_parks <- nps_parks %>%
                        RecreationVisitsTotal2019, RecreationHoursTotal2019, AvgMonthlyVisits2019, AvgMonthlyHours2019,
                        activities, topics, entranceFees) %>%
                 arrange(UnitCode)
-
-
-
-nps_parks1 = nps_parks
-
-nps_parks_cost = lapply(str_split(nps_parks$entranceFees, ", "), function(x) c(x))
-
-for (i in 1:length(nps_parks_cost)) {
-  for (j in 1:length(nps_parks_cost[[i]])) {
-    cost = rep(NA, j)
-    if (is.na(nps_parks_cost[[i]][j])) {
-          nps_parks_cost[[i]][j] = "NA"}
-    if (str_detect(nps_parks_cost[[i]][j], "(0.0000)")==TRUE) {
-          cost[j] = str_extract(nps_parks_cost[[i]][j], "(?<=\\().*?(?=\\))")}
-    else if (str_detect(nps_parks_cost[[i]][j], "Per Person|Adult|Person|Individual")==TRUE){
-        cost[j] = str_extract(nps_parks_cost[[i]][j], "(?<=\\().*?(?=\\))") 
-    }
-    PersonCost[i] = min(cost, na.rm = TRUE)
-  }
-}
-
-nps_parks1$Cost = PersonCost
-
-
-if (str_detect(nps_parks_cost[[41]][1], "Free")==TRUE){
-  print(0)} else if(str_detect(nps_parks_cost[[41]][1], "Per Person")==TRUE){
-  print(1)
-}
 
 write.csv(nps_parks, file = "C:/Users/Beau/Google Drive (nfindley1@tamu.edu)/STAT 656 - Applied Analytics/Project/Data/NPS_Master_Parks.csv", row.names = F)
 
