@@ -19,8 +19,8 @@ library(tidyverse)
 library(scales)
 library(lubridate)
 
-nps_parks <- read.csv("C:/Users/Beau/Google Drive (nfindley1@tamu.edu)/STAT 656 - Applied Analytics/Project/Data/NPS_Master_Parks.csv", header=T)
-nps_parks_1990to2019 <- read.csv("C:/Users/Beau/Google Drive (nfindley1@tamu.edu)/STAT 656 - Applied Analytics/Project/Data/NPS_master_Parks_1990to2019.csv", header=T)
+nps_parks <- read.csv("C:/Users/Beau/Google Drive (nfindley1@tamu.edu)/STAT 656 - Applied Analytics/Project/national_parks/Data Files/NPS_Master_Parks.csv", header=T)
+nps_parks_1990to2019 <- read.csv("C:/Users/Beau/Google Drive (nfindley1@tamu.edu)/STAT 656 - Applied Analytics/Project/national_parks/Data Files/NPS_master_Parks_1990to2019.csv", header=T)
 nps_parks_1990to2019$Date <- as.Date(nps_parks_1990to2019$Date)
 
 ###############################################################################
@@ -60,7 +60,7 @@ ggsave("Average2019ParkVisitsByState.png", path = "C:/Users/Beau/Google Drive (n
 ###############################################################################
 
 ggplot(subset(nps_parks_1990to2019, 
-              UnitCode %in% c("GRSM"))) +
+              UnitCode %in% c("GLAC"))) +
   geom_line(mapping = aes(Date, RecreationVisits, color = ParkName), size = .75) +
   scale_x_date(breaks = "2 years", labels = date_format("%Y")) +
   scale_y_continuous(labels = comma) +
