@@ -1,0 +1,332 @@
+---
+title: "EDA on National Parks Data"
+author: "Aubrey Smiley"
+date: "11/1/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+install.packages("stringr")
+library(stringr)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+npsdat <- read.csv("~/GitHub/national_parks/Data Files/NPS_with_Poverty_1995-2018.csv")
+```
+
+
+
+## Calculating Proportions of Public and Private Acres
+
+```{r}
+npsdat$publicAcres = npsdat$NPS.Fee.Acres/npsdat$Gross.Area.Acres
+npsdat$privateAcres = npsdat$Private.Acres/npsdat$Gross.Area.Acres
+```
+
+## Selecting Park Fee From Entrance Fees column
+
+```{r}
+head(npsdat$entranceFees)
+```
+```{r}
+npsdat$fees = sub("\\).*", "", sub(".*\\(", "", npsdat$entranceFees))
+npsdat$fees<-gsub("\\..*","",npsdat$fees)
+```
+
+```{r}
+npsdat$fees = strtoi(npsdat$fees)
+head(npsdat$fees)
+```
+
+## Separating out Predictors
+
+```{r}
+X = subset(npsdat, select = -c(UnitCode, latitude, longitude, DateCreated, NPS.Fee.Acres, Private.Acres, Date, Month, RecreationVisits, activities, topics, entranceFees, RecreationHours))
+colnames(X)
+```
+
+## Assigning our Supervisor
+
+```{r}
+Y = npsdat$RecreationVisits
+```
+
+## How much data is missing? 
+
+```{r}
+sapply(X, function(x) sum(is.na(x)))
+sum(is.na(Y))
+```
+
+## Examining Age's missing values
+
+```{r}
+missingAge = X[is.na(X$Age),]
+```
+
+## Only Oklahoma City National Memorial and Klondike Gold Rush Seattle Unit have missing values for age. Their acreage data is also missing. 
+
+### Oklahoma City National Memorial was founded in 1997 and is 3.3 acres. 3.12 acres are federal acres.
+
+### Klondike Gold Rush - Seattle Unit was founded in 1976 and exists inside the Cadillac Hotel. We will substitute in 0.25 acres and it's federally funded.
+
+```{r}
+X$Age[which(X$ParkName == "Oklahoma City")] <- X$Year[which(X$ParkName == "Oklahoma City")] - 1997
+X$Age[which(X$ParkName == "Klondike Gold Rush - Seattle Unit")] <- X$Year[which(X$ParkName == "Klondike Gold Rush - Seattle Unit")] - 1976
+X$Gross.Area.Acres[which(X$ParkName == "Oklahoma City")] <- 3.3
+X$Gross.Area.Acres[which(X$ParkName == "Klondike Gold Rush - Seattle Unit")] <- 0.25
+X$publicAcres[which(X$ParkName == "Oklahoma City")] <- 3.12/3.3
+X$privateAcres[which(X$ParkName == "Oklahoma City")] <- (3.3-3.12)/3.3
+X$publicAcres[which(X$ParkName == "Klondike Gold Rush - Seattle Unit")] <- 1
+X$privateAcres[which(X$ParkName == "Klondike Gold Rush - Seattle Unit")] <- 0
+```
+
+
+## Now, let's take a look at missing fees.
+
+```{r}
+missingfee = X[is.na(X$fees),]
+length(unique(missingfee$ParkName))
+length(unique(X$ParkName))
+```
+
+## 10 out of 328 Parks are missing fees. This should be Google-able.
+
+```{r}
+X$fees[which(X$ParkName == "Casa Grande Ruins")] <- 10
+X$fees[which(X$ParkName == "Devils Postpile")] <- 10
+X$fees[which(X$ParkName == "City Of Rocks")] <- 0
+X$fees[which(X$ParkName == "Lincoln Boyhood")] <- 0
+X$fees[which(X$ParkName == "Scotts Bluff")] <- 0
+X$fees[which(X$ParkName == "Carlsbad Caverns")] <- 15
+X$fees[which(X$ParkName == "Pecos")] <- 0
+X$fees[which(X$ParkName == "Stonewall")] <- 0
+X$fees[which(X$ParkName == "Eisenhower")] <- 0
+X$fees[which(X$ParkName == "Jewel Cave")] <- 8 # This is the average cost across several types of tours and tickets
+```
+
+## Lastly, let's examine the missing acreage
+
+```{r}
+missingacres = X[is.na(X$Gross.Area.Acres),]
+```
+
+## According to NPS History, found at http://www.npshistory.com/publications/foundation-documents/ania-fs-2009.pdf, Aniakchak's full acreage was reliquished by the federal government to Native groups in the Native Claims Settlement Act of 1971. 
+
+```{r}
+X$Gross.Area.Acres[which(X$ParkName == "Aniakchak")] = 601294
+X$publicAcres[which(X$ParkName == "Aniakchak")] = 0
+X$privateAcres[which(X$ParkName == "Aniakchak")] = 1
+```
+
+# Examining Distributions
+
+```{r}
+X %>%
+  count(ParkType)
+```
+
+```{r}
+X %>%
+  count(NPFlag)
+```
+
+```{r}
+X %>%
+  count(Region)
+```
+
+```{r}
+ggplot(data = X) +
+  geom_histogram(mapping = aes(x = Age), binwidth = 5)
+```
+
+
+
+```{r}
+ggplot(data = X) +
+  geom_histogram(mapping = aes(x = Gross.Area.Acres))
+```
+
+### Gross Acreage will likely need a transformation.
+
+```{r}
+X$logAcres = log(X$Gross.Area.Acres+1)
+ggplot(data = X) +
+  geom_histogram(mapping = aes(x = logAcres), )
+X = subset(X, select = -c(Gross.Area.Acres))
+```
+
+```{r}
+ggplot(data = X) +
+  geom_histogram(mapping = aes(x = Poverty.Percent..All.Ages), binwidth = 1)
+```
+
+
+```{r}
+ggplot(data = X) +
+  geom_histogram(mapping = aes(x = Median.Household.Income))
+```
+
+## What about Y?
+
+```{r}
+hist(Y)
+Y[which(Y<0)] = 0
+Y = log(Y+1)
+```
+
+## This looks much better. 
+
+```{r}
+hist(Y)
+```
+
+
+# How do our features relate to each other? 
+
+## First, we look at quantitative features. 
+
+```{r, include = FALSE}
+install.packages("corrplot")
+library(corrplot)
+```
+
+## Visualization of correlations
+
+```{r}
+quantmat = subset(X, select = -c(States, ParkName, ParkType, NPFlag, Region, MonthName))
+quantmat$Month = npsdat$Month
+quantmat$Visits = npsdat$RecreationVisits
+head(quantmat)
+quantcor = cor(quantmat)
+corrplot(quantcor, order = "hclust")
+```
+
+```{r}
+cor(Y, X$Poverty.Percent..Age.0.17)
+cor(Y, X$Poverty.Percent..Age.5.17.in.Families)
+cor(Y, X$Poverty.Percent..Age.0.4)
+cor(Y, X$Poverty.Percent..All.Ages)
+```
+
+## We are going to keep Poverty Percentage for ages 5-17 in families, because it has the strongest relationship with visitation
+
+```{r}
+quantmat2 = subset(quantmat, select = c(Poverty.Percent..Age.5.17.in.Families, Age, publicAcres, Visits, fees, logAcres, Month, privateAcres, Year, Median.Household.Income))
+quantcor = cor(quantmat2, method = "spearman")
+round(quantcor, 2)
+```
+
+## Based on these results, we're going to drop private acres because public acres has a stronger relationship with visits.
+
+```{r}
+Xquant = subset(X, select = -c(States, ParkName, Poverty.Percent..Age.0.17, Poverty.Percent..Age.0.4, Poverty.Percent..All.Ages, privateAcres, MonthName))
+```
+
+## Let's look at some K-Means Solutions after Dimensionality Reduction
+
+```{r}
+Xquant$Visits = Y
+Xquant$Month = npsdat$Month
+Xquant$Region= as.numeric(factor(X$Region))
+Xquant$ParkType= as.numeric(factor(X$ParkType))
+sapply(X, typeof)
+Xquant = sapply(X, as.numeric)
+```
+
+```{r, include = FALSE}
+install.packages("knor")
+install.packages("factoextra")
+install.packages("ggpubr")
+library(factoextra)
+library(knor)
+library(ggpubr)
+
+```
+
+
+```{r}
+pc = prcomp(Xquant, center = TRUE, scale = TRUE)
+plot(pc)
+summary(pc)
+```
+
+## Keeping the first 9 PCs will give us 85% of the variance. 
+
+```{r}
+comp = matrix(pc$x[,1:9])
+```
+```{r}
+require(knor)
+nthread <- 4
+K = 5
+kmeans.out <- Kmeans(comp, K, iter.max = 100, nthread=nthread)
+names(kmeans.out)
+```
+
+```{r, include = FALSE}
+install.packages("RColorBrewer")
+install.packages(scales)
+library(RColorBrewer)
+library(scales)
+```
+```{r}
+palette(alpha(brewer.pal(9,'Set1'), 0.5))
+plot(Y, col=kmeans.out$cluster, pch=16)
+```
+
+
+#What if we don't use PCA?
+
+```{r}
+require(knor)
+nthread <- 4
+K = 5
+kmeans2.out <- Kmeans(scale(Xquant), K, iter.max = 100, nthread=nthread)
+plot(Y, col=kmeans2.out$cluster, pch=16)
+```
+
+
+```{r}
+frame = data.frame(npsdat$ParkName, Y, kmeans2.out$cluster)
+frame = setNames(frame, c("Name","logVisits","Cluster"))
+head(frame)
+```
+
+```{r}
+cluster1 = frame[frame$Cluster == 1,]
+cluster2 = frame[frame$Cluster == 2,]
+cluster3 = frame[frame$Cluster == 3,]
+cluster4 = frame[frame$Cluster == 4,]
+cluster5 = frame[frame$Cluster == 5,]
+```
+
+```{r}
+unique(cluster1$Name)
+length(unique(cluster1$Name))
+```
+
+```{r}
+unique(cluster2$Name)
+length(unique(cluster2$Name))
+```
+
+```{r}
+unique(cluster3$Name)
+length(unique(cluster3$Name))
+```
+
+
+```{r}
+unique(cluster4$Name)
+length(unique(cluster4$Name))
+```
+
+```{r}
+unique(cluster5$Name)
+length(unique(cluster5$Name))
+```
