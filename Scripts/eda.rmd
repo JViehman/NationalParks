@@ -39,6 +39,7 @@ npsdat$fees<-gsub("\\..*","",npsdat$fees)
 ```{r}
 npsdat$fees = strtoi(npsdat$fees)
 head(npsdat$fees)
+table(npsdat$fees)
 ```
 
 ## Separating out Predictors
@@ -106,6 +107,7 @@ X$fees[which(X$ParkName == "Pecos")] <- 0
 X$fees[which(X$ParkName == "Stonewall")] <- 0
 X$fees[which(X$ParkName == "Eisenhower")] <- 0
 X$fees[which(X$ParkName == "Jewel Cave")] <- 8 # This is the average cost across several types of tours and tickets
+X$fees[which(X$fees>0)] = 1
 ```
 
 ## Lastly, let's examine the missing acreage
@@ -263,7 +265,7 @@ comp = matrix(pc$x[,1:9])
 ```{r}
 require(knor)
 nthread <- 4
-K = 5
+K = 3
 kmeans.out <- Kmeans(comp, K, iter.max = 100, nthread=nthread)
 names(kmeans.out)
 ```
@@ -285,15 +287,15 @@ plot(Y, col=kmeans.out$cluster, pch=16)
 ```{r}
 require(knor)
 nthread <- 4
-K = 5
+K = 3
 kmeans2.out <- Kmeans(scale(Xquant), K, iter.max = 100, nthread=nthread)
 plot(Y, col=kmeans2.out$cluster, pch=16)
 ```
 
 
 ```{r}
-frame = data.frame(npsdat$ParkName, Y, kmeans2.out$cluster)
-frame = setNames(frame, c("Name","logVisits","Cluster"))
+frame = data.frame(npsdat$ParkName, Y, X$fees, kmeans2.out$cluster)
+frame = setNames(frame, c("Name","logVisits", "fees", "Cluster"))
 head(frame)
 ```
 
@@ -301,8 +303,6 @@ head(frame)
 cluster1 = frame[frame$Cluster == 1,]
 cluster2 = frame[frame$Cluster == 2,]
 cluster3 = frame[frame$Cluster == 3,]
-cluster4 = frame[frame$Cluster == 4,]
-cluster5 = frame[frame$Cluster == 5,]
 ```
 
 ```{r}
@@ -320,13 +320,11 @@ unique(cluster3$Name)
 length(unique(cluster3$Name))
 ```
 
-
 ```{r}
-unique(cluster4$Name)
-length(unique(cluster4$Name))
-```
-
-```{r}
-unique(cluster5$Name)
-length(unique(cluster5$Name))
+mean(exp(cluster1$logVisits))
+mean(exp(cluster2$logVisits))
+mean(exp(cluster3$logVisits))
+summary(cluster1$fees)
+summary(cluster2$fees)
+summary(cluster3$fees)
 ```
