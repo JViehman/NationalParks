@@ -2,8 +2,15 @@
 title: "EDA on National Parks Data"
 author: "Aubrey Smiley"
 date: "11/1/2020"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
+
+
+```{r, include=FALSE, echo=FALSE}
+options(repos = c(CRAN = "http://cran.rstudio.com"))
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -227,6 +234,7 @@ round(quantcor, 2)
 
 ```{r}
 Xquant = subset(X, select = -c(States, ParkName, Poverty.Percent..Age.0.17, Poverty.Percent..Age.0.4, Poverty.Percent..All.Ages, privateAcres, MonthName))
+Xquantclust = subset(X, select = -c(States, ParkName, Poverty.Percent..Age.0.17, Poverty.Percent..Age.0.4, Poverty.Percent..All.Ages, privateAcres, MonthName))
 ```
 
 ## Let's look at some K-Means Solutions after Dimensionality Reduction
@@ -236,8 +244,20 @@ Xquant$Visits = Y
 Xquant$Month = npsdat$Month
 Xquant$Region= as.numeric(factor(X$Region))
 Xquant$ParkType= as.numeric(factor(X$ParkType))
-sapply(X, typeof)
-Xquant = sapply(X, as.numeric)
+sapply(Xquant, typeof)
+Xquant = sapply(Xquant, as.numeric)
+```
+```{r}
+Xquantclust = subset(X, select = -c(States, ParkName, Poverty.Percent..Age.0.17, Poverty.Percent..Age.0.4, Poverty.Percent..All.Ages, privateAcres, MonthName))
+```
+
+## Let's look at some K-Means Solutions after Dimensionality Reduction
+
+```{r}
+Xquantclust$Visits = Y
+Xquantclust$Month = npsdat$Month
+Xquantclust$Region= factor(X$Region)
+Xquantclust$ParkType= factor(X$ParkType)
 ```
 
 ```{r, include = FALSE}
@@ -272,9 +292,9 @@ names(kmeans.out)
 
 ```{r, include = FALSE}
 install.packages("RColorBrewer")
-install.packages(scales)
+#install.packages(scales)
 library(RColorBrewer)
-library(scales)
+#library(scales)
 ```
 ```{r}
 palette(alpha(brewer.pal(9,'Set1'), 0.5))
@@ -289,13 +309,16 @@ require(knor)
 nthread <- 4
 K = 3
 kmeans2.out <- Kmeans(scale(Xquant), K, iter.max = 100, nthread=nthread)
-plot(Y, col=kmeans2.out$cluster, pch=16)
+plot(Y, col=kmeans2.out$cluster, pch=16, ylab = "Log Visits")
 ```
 
 
 ```{r}
-frame = data.frame(npsdat$ParkName, Y, X$fees, kmeans2.out$cluster)
-frame = setNames(frame, c("Name","logVisits", "fees", "Cluster"))
+frame = data.frame(exp(Y), Xquantclust, kmeans2.out$cluster)
+names(frame)[names(frame) == "exp.Y."] <- "Visitors"
+names(frame)[names(frame) == "kmeans2.out.cluster"] <- "Cluster"
+names(frame)[names(frame) == "Poverty.Percent..Age.5.17.in.Families"] <- "Poverty"
+frame = select(frame, -c(Year))
 head(frame)
 ```
 
@@ -303,28 +326,29 @@ head(frame)
 cluster1 = frame[frame$Cluster == 1,]
 cluster2 = frame[frame$Cluster == 2,]
 cluster3 = frame[frame$Cluster == 3,]
+#print("Cluster 1 Summary: \n")
+#summary(cluster1)
+#print("\nCluster 2 Summary: \n")
+#summary(cluster2)
+#print("\nCluster3 Summary: \n")
+#summary(cluster3)
 ```
 
-```{r}
-unique(cluster1$Name)
-length(unique(cluster1$Name))
-```
 
-```{r}
-unique(cluster2$Name)
-length(unique(cluster2$Name))
+```{r, include = FALSE}
+install.packages("gtsummary")
+library(gtsummary)
 ```
-
 ```{r}
-unique(cluster3$Name)
-length(unique(cluster3$Name))
-```
-
-```{r}
-mean(exp(cluster1$logVisits))
-mean(exp(cluster2$logVisits))
-mean(exp(cluster3$logVisits))
-summary(cluster1$fees)
-summary(cluster2$fees)
-summary(cluster3$fees)
+# make dataset with a few variables to summarize
+shortclust1 <- cluster1 %>% select(Visitors, Region, Poverty, Median.Household.Income, publicAcres, fees)
+shortclust2 <- cluster2 %>% select(Visitors, Region, Poverty, Median.Household.Income, publicAcres, fees)
+shortclust3 <- cluster3 %>% select(Visitors, Region, Poverty, Median.Household.Income, publicAcres, fees)
+# summarize the data with our package
+table1 <- tbl_summary(shortclust1)
+table2 <- tbl_summary(shortclust2)
+table3 <- tbl_summary(shortclust3)
+table1
+table2
+table3
 ```

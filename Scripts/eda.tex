@@ -1,0 +1,1285 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={EDA on National Parks Data},
+  pdfauthor={Aubrey Smiley},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{EDA on National Parks Data}
+\author{Aubrey Smiley}
+\date{11/1/2020}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{npsdat <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"~/GitHub/national_parks/Data Files/NPS_with_Poverty_1995-2018.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{calculating-proportions-of-public-and-private-acres}{%
+\subsection{Calculating Proportions of Public and Private
+Acres}\label{calculating-proportions-of-public-and-private-acres}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{npsdat}\OperatorTok{$}\NormalTok{publicAcres =}\StringTok{ }\NormalTok{npsdat}\OperatorTok{$}\NormalTok{NPS.Fee.Acres}\OperatorTok{/}\NormalTok{npsdat}\OperatorTok{$}\NormalTok{Gross.Area.Acres}
+\NormalTok{npsdat}\OperatorTok{$}\NormalTok{privateAcres =}\StringTok{ }\NormalTok{npsdat}\OperatorTok{$}\NormalTok{Private.Acres}\OperatorTok{/}\NormalTok{npsdat}\OperatorTok{$}\NormalTok{Gross.Area.Acres}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{selecting-park-fee-from-entrance-fees-column}{%
+\subsection{Selecting Park Fee From Entrance Fees
+column}\label{selecting-park-fee-from-entrance-fees-column}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(npsdat}\OperatorTok{$}\NormalTok{entranceFees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] Denali Entrance Feeâ\200”Per Person (15.0000)
+## [2] Free Entrance (0.0000)                    
+## [3] No Entrance Fee (0.0000)                  
+## [4] Free Entrance (0.0000)                    
+## [5] Lake Clark Entrance and User Fees (0.0000)
+## [6] Free Entrance (0.0000)                    
+## 215 Levels: 1-Day Pass - Automobile (25.0000), 1-Day Pass - Motorcycle (25.0000), 1-Day Pass - Per Person (15.0000) ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{npsdat}\OperatorTok{$}\NormalTok{fees =}\StringTok{ }\KeywordTok{sub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{).*"}\NormalTok{, }\StringTok{""}\NormalTok{, }\KeywordTok{sub}\NormalTok{(}\StringTok{".*}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{("}\NormalTok{, }\StringTok{""}\NormalTok{, npsdat}\OperatorTok{$}\NormalTok{entranceFees))}
+\NormalTok{npsdat}\OperatorTok{$}\NormalTok{fees<-}\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{..*"}\NormalTok{,}\StringTok{""}\NormalTok{,npsdat}\OperatorTok{$}\NormalTok{fees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{npsdat}\OperatorTok{$}\NormalTok{fees =}\StringTok{ }\KeywordTok{strtoi}\NormalTok{(npsdat}\OperatorTok{$}\NormalTok{fees)}
+\KeywordTok{head}\NormalTok{(npsdat}\OperatorTok{$}\NormalTok{fees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15  0  0  0  0  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(npsdat}\OperatorTok{$}\NormalTok{fees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##     0     1     2     3     4     5     7     8     9    10    12    15    20 
+## 56217   552  1104   552   276   708   552   871   276  3036   828  7644  2760 
+##    25    30    35    40    45    60   100   150   200   300 
+##  1932   828   276   828   276   276  1380   828   276   276
+\end{verbatim}
+
+\hypertarget{separating-out-predictors}{%
+\subsection{Separating out Predictors}\label{separating-out-predictors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X =}\StringTok{ }\KeywordTok{subset}\NormalTok{(npsdat, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(UnitCode, latitude, longitude, DateCreated, NPS.Fee.Acres, Private.Acres, Date, Month, RecreationVisits, activities, topics, entranceFees, RecreationHours))}
+\KeywordTok{colnames}\NormalTok{(X)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "States"                               
+##  [2] "Year"                                 
+##  [3] "ParkName"                             
+##  [4] "ParkType"                             
+##  [5] "NPFlag"                               
+##  [6] "Region"                               
+##  [7] "Age"                                  
+##  [8] "Gross.Area.Acres"                     
+##  [9] "MonthName"                            
+## [10] "Poverty.Percent..All.Ages"            
+## [11] "Poverty.Percent..Age.0.17"            
+## [12] "Poverty.Percent..Age.5.17.in.Families"
+## [13] "Median.Household.Income"              
+## [14] "Poverty.Percent..Age.0.4"             
+## [15] "publicAcres"                          
+## [16] "privateAcres"                         
+## [17] "fees"
+\end{verbatim}
+
+\hypertarget{assigning-our-supervisor}{%
+\subsection{Assigning our Supervisor}\label{assigning-our-supervisor}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y =}\StringTok{ }\NormalTok{npsdat}\OperatorTok{$}\NormalTok{RecreationVisits}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{how-much-data-is-missing}{%
+\subsection{How much data is missing?}\label{how-much-data-is-missing}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(X, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                States                                  Year 
+##                                     0                                     0 
+##                              ParkName                              ParkType 
+##                                     0                                     0 
+##                                NPFlag                                Region 
+##                                     0                                     0 
+##                                   Age                      Gross.Area.Acres 
+##                                   312                                   564 
+##                             MonthName             Poverty.Percent..All.Ages 
+##                                     0                                     0 
+##             Poverty.Percent..Age.0.17 Poverty.Percent..Age.5.17.in.Families 
+##                                     0                                     0 
+##               Median.Household.Income              Poverty.Percent..Age.0.4 
+##                                     0                                     0 
+##                           publicAcres                          privateAcres 
+##                                   564                                   564 
+##                                  fees 
+##                                  2508
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(Y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\hypertarget{examining-ages-missing-values}{%
+\subsection{Examining Age's missing
+values}\label{examining-ages-missing-values}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{missingAge =}\StringTok{ }\NormalTok{X[}\KeywordTok{is.na}\NormalTok{(X}\OperatorTok{$}\NormalTok{Age),]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{only-oklahoma-city-national-memorial-and-klondike-gold-rush-seattle-unit-have-missing-values-for-age.-their-acreage-data-is-also-missing.}{%
+\subsection{Only Oklahoma City National Memorial and Klondike Gold Rush
+Seattle Unit have missing values for age. Their acreage data is also
+missing.}\label{only-oklahoma-city-national-memorial-and-klondike-gold-rush-seattle-unit-have-missing-values-for-age.-their-acreage-data-is-also-missing.}}
+
+\hypertarget{oklahoma-city-national-memorial-was-founded-in-1997-and-is-3.3-acres.-3.12-acres-are-federal-acres.}{%
+\subsubsection{Oklahoma City National Memorial was founded in 1997 and
+is 3.3 acres. 3.12 acres are federal
+acres.}\label{oklahoma-city-national-memorial-was-founded-in-1997-and-is-3.3-acres.-3.12-acres-are-federal-acres.}}
+
+\hypertarget{klondike-gold-rush---seattle-unit-was-founded-in-1976-and-exists-inside-the-cadillac-hotel.-we-will-substitute-in-0.25-acres-and-its-federally-funded.}{%
+\subsubsection{Klondike Gold Rush - Seattle Unit was founded in 1976 and
+exists inside the Cadillac Hotel. We will substitute in 0.25 acres and
+it's federally
+funded.}\label{klondike-gold-rush---seattle-unit-was-founded-in-1976-and-exists-inside-the-cadillac-hotel.-we-will-substitute-in-0.25-acres-and-its-federally-funded.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}\OperatorTok{$}\NormalTok{Age[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Oklahoma City"}\NormalTok{)] <-}\StringTok{ }\NormalTok{X}\OperatorTok{$}\NormalTok{Year[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Oklahoma City"}\NormalTok{)] }\OperatorTok{-}\StringTok{ }\DecValTok{1997}
+\NormalTok{X}\OperatorTok{$}\NormalTok{Age[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Klondike Gold Rush - Seattle Unit"}\NormalTok{)] <-}\StringTok{ }\NormalTok{X}\OperatorTok{$}\NormalTok{Year[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Klondike Gold Rush - Seattle Unit"}\NormalTok{)] }\OperatorTok{-}\StringTok{ }\DecValTok{1976}
+\NormalTok{X}\OperatorTok{$}\NormalTok{Gross.Area.Acres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Oklahoma City"}\NormalTok{)] <-}\StringTok{ }\FloatTok{3.3}
+\NormalTok{X}\OperatorTok{$}\NormalTok{Gross.Area.Acres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Klondike Gold Rush - Seattle Unit"}\NormalTok{)] <-}\StringTok{ }\FloatTok{0.25}
+\NormalTok{X}\OperatorTok{$}\NormalTok{publicAcres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Oklahoma City"}\NormalTok{)] <-}\StringTok{ }\FloatTok{3.12}\OperatorTok{/}\FloatTok{3.3}
+\NormalTok{X}\OperatorTok{$}\NormalTok{privateAcres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Oklahoma City"}\NormalTok{)] <-}\StringTok{ }\NormalTok{(}\FloatTok{3.3-3.12}\NormalTok{)}\OperatorTok{/}\FloatTok{3.3}
+\NormalTok{X}\OperatorTok{$}\NormalTok{publicAcres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Klondike Gold Rush - Seattle Unit"}\NormalTok{)] <-}\StringTok{ }\DecValTok{1}
+\NormalTok{X}\OperatorTok{$}\NormalTok{privateAcres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Klondike Gold Rush - Seattle Unit"}\NormalTok{)] <-}\StringTok{ }\DecValTok{0}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{now-lets-take-a-look-at-missing-fees.}{%
+\subsection{Now, let's take a look at missing
+fees.}\label{now-lets-take-a-look-at-missing-fees.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{missingfee =}\StringTok{ }\NormalTok{X[}\KeywordTok{is.na}\NormalTok{(X}\OperatorTok{$}\NormalTok{fees),]}
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(missingfee}\OperatorTok{$}\NormalTok{ParkName))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 328
+\end{verbatim}
+
+\hypertarget{out-of-328-parks-are-missing-fees.-this-should-be-google-able.}{%
+\subsection{10 out of 328 Parks are missing fees. This should be
+Google-able.}\label{out-of-328-parks-are-missing-fees.-this-should-be-google-able.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Casa Grande Ruins"}\NormalTok{)] <-}\StringTok{ }\DecValTok{10}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Devils Postpile"}\NormalTok{)] <-}\StringTok{ }\DecValTok{10}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "City Of Rocks"}\NormalTok{)] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Lincoln Boyhood"}\NormalTok{)] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Scotts Bluff"}\NormalTok{)] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Carlsbad Caverns"}\NormalTok{)] <-}\StringTok{ }\DecValTok{15}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Pecos"}\NormalTok{)] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Stonewall"}\NormalTok{)] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Eisenhower"}\NormalTok{)] <-}\StringTok{ }\DecValTok{0}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Jewel Cave"}\NormalTok{)] <-}\StringTok{ }\DecValTok{8} \CommentTok{# This is the average cost across several types of tours and tickets}
+\NormalTok{X}\OperatorTok{$}\NormalTok{fees[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{fees}\OperatorTok{>}\DecValTok{0}\NormalTok{)] =}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{lastly-lets-examine-the-missing-acreage}{%
+\subsection{Lastly, let's examine the missing
+acreage}\label{lastly-lets-examine-the-missing-acreage}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{missingacres =}\StringTok{ }\NormalTok{X[}\KeywordTok{is.na}\NormalTok{(X}\OperatorTok{$}\NormalTok{Gross.Area.Acres),]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{according-to-nps-history-found-at-httpwww.npshistory.compublicationsfoundation-documentsania-fs-2009.pdf-aniakchaks-full-acreage-was-reliquished-by-the-federal-government-to-native-groups-in-the-native-claims-settlement-act-of-1971.}{%
+\subsection{\texorpdfstring{According to NPS History, found at
+\url{http://www.npshistory.com/publications/foundation-documents/ania-fs-2009.pdf},
+Aniakchak's full acreage was reliquished by the federal government to
+Native groups in the Native Claims Settlement Act of
+1971.}{According to NPS History, found at http://www.npshistory.com/publications/foundation-documents/ania-fs-2009.pdf, Aniakchak's full acreage was reliquished by the federal government to Native groups in the Native Claims Settlement Act of 1971.}}\label{according-to-nps-history-found-at-httpwww.npshistory.compublicationsfoundation-documentsania-fs-2009.pdf-aniakchaks-full-acreage-was-reliquished-by-the-federal-government-to-native-groups-in-the-native-claims-settlement-act-of-1971.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}\OperatorTok{$}\NormalTok{Gross.Area.Acres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Aniakchak"}\NormalTok{)] =}\StringTok{ }\DecValTok{601294}
+\NormalTok{X}\OperatorTok{$}\NormalTok{publicAcres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Aniakchak"}\NormalTok{)] =}\StringTok{ }\DecValTok{0}
+\NormalTok{X}\OperatorTok{$}\NormalTok{privateAcres[}\KeywordTok{which}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkName }\OperatorTok{==}\StringTok{ "Aniakchak"}\NormalTok{)] =}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{examining-distributions}{%
+\section{Examining Distributions}\label{examining-distributions}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(ParkType)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                 ParkType     n
+## 1                                         3261
+## 2         Ecological & Historic Preserve   276
+## 3            International Historic Site    72
+## 4                               Memorial   552
+## 5               National and State Parks   276
+## 6                   National Battlefield  2484
+## 7              National Battlefield Park   924
+## 8                 National Historic Site 16931
+## 9               National Historical Park 10839
+## 10 National Historical Park and Preserve   276
+## 11                    National Lakeshore   828
+## 12                     National Memorial  4152
+## 13                National Military Park  1656
+## 14                     National Monument 15702
+## 15          National Monument & Preserve   804
+## 16 National Monument and Historic Shrine   276
+## 17          National Monument of America   276
+## 18                         National Park 12971
+## 19              National Park & Preserve  1920
+## 20                     National Preserve  2028
+## 21              National Recreation Area  2760
+## 22                      National Reserve   276
+## 23                        National River   552
+## 24    National River and Recreation Area    96
+## 25                 National Scenic River   456
+## 26             National Scenic Riverways   276
+## 27                     National Seashore  2208
+## 28                                  Park  1656
+## 29                   Wild & Scenic River   276
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(NPFlag)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   NPFlag     n
+## 1      0 70169
+## 2      1 14891
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(Region)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Region     n
+## 1            Alaska  4068
+## 2    Intermountain  19886
+## 3          Midwest  12650
+## 4 National Capital   6633
+## 5        Northeast  18157
+## 6     Pacific West  11744
+## 7        Southeast  11922
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ X) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Age), }\DataTypeTok{binwidth =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ X) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Gross.Area.Acres))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\hypertarget{gross-acreage-will-likely-need-a-transformation.}{%
+\subsubsection{Gross Acreage will likely need a
+transformation.}\label{gross-acreage-will-likely-need-a-transformation.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}\OperatorTok{$}\NormalTok{logAcres =}\StringTok{ }\KeywordTok{log}\NormalTok{(X}\OperatorTok{$}\NormalTok{Gross.Area.Acres}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ X) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ logAcres), )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X =}\StringTok{ }\KeywordTok{subset}\NormalTok{(X, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(Gross.Area.Acres))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ X) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Poverty.Percent..All.Ages), }\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ X) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Median.Household.Income))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\hypertarget{what-about-y}{%
+\subsection{What about Y?}\label{what-about-y}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(Y)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y[}\KeywordTok{which}\NormalTok{(Y}\OperatorTok{<}\DecValTok{0}\NormalTok{)] =}\StringTok{ }\DecValTok{0}
+\NormalTok{Y =}\StringTok{ }\KeywordTok{log}\NormalTok{(Y}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{this-looks-much-better.}{%
+\subsection{This looks much better.}\label{this-looks-much-better.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(Y)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\hypertarget{how-do-our-features-relate-to-each-other}{%
+\section{How do our features relate to each
+other?}\label{how-do-our-features-relate-to-each-other}}
+
+\hypertarget{first-we-look-at-quantitative-features.}{%
+\subsection{First, we look at quantitative
+features.}\label{first-we-look-at-quantitative-features.}}
+
+\hypertarget{visualization-of-correlations}{%
+\subsection{Visualization of
+correlations}\label{visualization-of-correlations}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quantmat =}\StringTok{ }\KeywordTok{subset}\NormalTok{(X, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(States, ParkName, ParkType, NPFlag, Region, MonthName))}
+\NormalTok{quantmat}\OperatorTok{$}\NormalTok{Month =}\StringTok{ }\NormalTok{npsdat}\OperatorTok{$}\NormalTok{Month}
+\NormalTok{quantmat}\OperatorTok{$}\NormalTok{Visits =}\StringTok{ }\NormalTok{npsdat}\OperatorTok{$}\NormalTok{RecreationVisits}
+\KeywordTok{head}\NormalTok{(quantmat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Year Age Poverty.Percent..All.Ages Poverty.Percent..Age.0.17
+## 1 1995 104                      10.1                      14.8
+## 2 1995  42                      10.1                      14.8
+## 3 1995  42                      10.1                      14.8
+## 4 1995  42                      10.1                      14.8
+## 5 1995  42                      10.1                      14.8
+## 6 1995  42                      10.1                      14.8
+##   Poverty.Percent..Age.5.17.in.Families Median.Household.Income
+## 1                                  11.2                   42255
+## 2                                  11.2                   42255
+## 3                                  11.2                   42255
+## 4                                  11.2                   42255
+## 5                                  11.2                   42255
+## 6                                  11.2                   42255
+##   Poverty.Percent..Age.0.4 publicAcres privateAcres fees logAcres Month Visits
+## 1                     15.7   0.9937221  0.005240054    1 15.61970     1     84
+## 2                     15.7   0.9942537  0.005564590    0 15.70062     9   1164
+## 3                     15.7   0.9006642  0.070511740    0 13.41451    11     31
+## 4                     15.7   0.9510997  0.032898824    0 13.38334     7    550
+## 5                     15.7   0.9259044  0.048065885    0 15.20930     1    100
+## 6                     15.7   0.9510997  0.032898824    0 13.38334    12     65
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quantcor =}\StringTok{ }\KeywordTok{cor}\NormalTok{(quantmat)}
+\KeywordTok{corrplot}\NormalTok{(quantcor, }\DataTypeTok{order =} \StringTok{"hclust"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(Y, X}\OperatorTok{$}\NormalTok{Poverty.Percent..Age.}\FloatTok{0.17}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1315713
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(Y, X}\OperatorTok{$}\NormalTok{Poverty.Percent..Age.}\DecValTok{5}\NormalTok{.}\FloatTok{17.}\NormalTok{in.Families)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1369153
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(Y, X}\OperatorTok{$}\NormalTok{Poverty.Percent..Age.}\FloatTok{0.4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1004023
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(Y, X}\OperatorTok{$}\NormalTok{Poverty.Percent..All.Ages)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1161952
+\end{verbatim}
+
+\hypertarget{we-are-going-to-keep-poverty-percentage-for-ages-5-17-in-families-because-it-has-the-strongest-relationship-with-visitation}{%
+\subsection{We are going to keep Poverty Percentage for ages 5-17 in
+families, because it has the strongest relationship with
+visitation}\label{we-are-going-to-keep-poverty-percentage-for-ages-5-17-in-families-because-it-has-the-strongest-relationship-with-visitation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quantmat2 =}\StringTok{ }\KeywordTok{subset}\NormalTok{(quantmat, }\DataTypeTok{select =} \KeywordTok{c}\NormalTok{(Poverty.Percent..Age.}\DecValTok{5}\NormalTok{.}\FloatTok{17.}\NormalTok{in.Families, Age, publicAcres, Visits, fees, logAcres, Month, privateAcres, Year, Median.Household.Income))}
+\NormalTok{quantcor =}\StringTok{ }\KeywordTok{cor}\NormalTok{(quantmat2, }\DataTypeTok{method =} \StringTok{"spearman"}\NormalTok{)}
+\KeywordTok{round}\NormalTok{(quantcor, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                       Poverty.Percent..Age.5.17.in.Families
+## Poverty.Percent..Age.5.17.in.Families                                  1.00
+## Age                                                                    0.01
+## publicAcres                                                            0.09
+## Visits                                                                 0.12
+## fees                                                                  -0.04
+## logAcres                                                              -0.13
+## Month                                                                  0.00
+## privateAcres                                                          -0.05
+## Year                                                                   0.12
+## Median.Household.Income                                               -0.30
+##                                         Age publicAcres Visits  fees logAcres
+## Poverty.Percent..Age.5.17.in.Families  0.01        0.09   0.12 -0.04    -0.13
+## Age                                    1.00        0.30   0.30  0.35     0.20
+## publicAcres                            0.30        1.00  -0.07  0.12    -0.24
+## Visits                                 0.30       -0.07   1.00  0.26     0.23
+## fees                                   0.35        0.12   0.26  1.00     0.32
+## logAcres                               0.20       -0.24   0.23  0.32     1.00
+## Month                                  0.00        0.00   0.05  0.00     0.00
+## privateAcres                          -0.21       -0.77   0.01 -0.13     0.28
+## Year                                  -0.06       -0.01  -0.01 -0.02    -0.03
+## Median.Household.Income               -0.06        0.03  -0.01  0.01    -0.03
+##                                       Month privateAcres  Year
+## Poverty.Percent..Age.5.17.in.Families  0.00        -0.05  0.12
+## Age                                    0.00        -0.21 -0.06
+## publicAcres                            0.00        -0.77 -0.01
+## Visits                                 0.05         0.01 -0.01
+## fees                                   0.00        -0.13 -0.02
+## logAcres                               0.00         0.28 -0.03
+## Month                                  1.00         0.00  0.00
+## privateAcres                           0.00         1.00  0.01
+## Year                                   0.00         0.01  1.00
+## Median.Household.Income                0.00        -0.05  0.75
+##                                       Median.Household.Income
+## Poverty.Percent..Age.5.17.in.Families                   -0.30
+## Age                                                     -0.06
+## publicAcres                                              0.03
+## Visits                                                  -0.01
+## fees                                                     0.01
+## logAcres                                                -0.03
+## Month                                                    0.00
+## privateAcres                                            -0.05
+## Year                                                     0.75
+## Median.Household.Income                                  1.00
+\end{verbatim}
+
+\hypertarget{based-on-these-results-were-going-to-drop-private-acres-because-public-acres-has-a-stronger-relationship-with-visits.}{%
+\subsection{Based on these results, we're going to drop private acres
+because public acres has a stronger relationship with
+visits.}\label{based-on-these-results-were-going-to-drop-private-acres-because-public-acres-has-a-stronger-relationship-with-visits.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Xquant =}\StringTok{ }\KeywordTok{subset}\NormalTok{(X, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(States, ParkName, Poverty.Percent..Age.}\FloatTok{0.17}\NormalTok{, Poverty.Percent..Age.}\FloatTok{0.4}\NormalTok{, Poverty.Percent..All.Ages, privateAcres, MonthName))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{lets-look-at-some-k-means-solutions-after-dimensionality-reduction}{%
+\subsection{Let's look at some K-Means Solutions after Dimensionality
+Reduction}\label{lets-look-at-some-k-means-solutions-after-dimensionality-reduction}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Xquant}\OperatorTok{$}\NormalTok{Visits =}\StringTok{ }\NormalTok{Y}
+\NormalTok{Xquant}\OperatorTok{$}\NormalTok{Month =}\StringTok{ }\NormalTok{npsdat}\OperatorTok{$}\NormalTok{Month}
+\NormalTok{Xquant}\OperatorTok{$}\NormalTok{Region=}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{factor}\NormalTok{(X}\OperatorTok{$}\NormalTok{Region))}
+\NormalTok{Xquant}\OperatorTok{$}\NormalTok{ParkType=}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{factor}\NormalTok{(X}\OperatorTok{$}\NormalTok{ParkType))}
+\KeywordTok{sapply}\NormalTok{(X, typeof)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                States                                  Year 
+##                             "integer"                             "integer" 
+##                              ParkName                              ParkType 
+##                             "integer"                             "integer" 
+##                                NPFlag                                Region 
+##                             "integer"                             "integer" 
+##                                   Age                             MonthName 
+##                              "double"                             "integer" 
+##             Poverty.Percent..All.Ages             Poverty.Percent..Age.0.17 
+##                              "double"                              "double" 
+## Poverty.Percent..Age.5.17.in.Families               Median.Household.Income 
+##                              "double"                             "integer" 
+##              Poverty.Percent..Age.0.4                           publicAcres 
+##                              "double"                              "double" 
+##                          privateAcres                                  fees 
+##                              "double"                              "double" 
+##                              logAcres 
+##                              "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Xquant =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(X, as.numeric)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pc =}\StringTok{ }\KeywordTok{prcomp}\NormalTok{(Xquant, }\DataTypeTok{center =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{scale =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(pc)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(pc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                           PC1    PC2    PC3    PC4     PC5     PC6     PC7
+## Standard deviation     2.0389 1.6077 1.3344 1.3047 1.05131 1.00000 0.97843
+## Proportion of Variance 0.2445 0.1520 0.1047 0.1001 0.06502 0.05882 0.05631
+## Cumulative Proportion  0.2445 0.3966 0.5013 0.6015 0.66649 0.72531 0.78162
+##                            PC8     PC9    PC10    PC11    PC12    PC13    PC14
+## Standard deviation     0.95348 0.90716 0.80038 0.74122 0.54999 0.51306 0.39820
+## Proportion of Variance 0.05348 0.04841 0.03768 0.03232 0.01779 0.01548 0.00933
+## Cumulative Proportion  0.83510 0.88351 0.92119 0.95351 0.97130 0.98679 0.99611
+##                           PC15    PC16    PC17
+## Standard deviation     0.20768 0.13642 0.06562
+## Proportion of Variance 0.00254 0.00109 0.00025
+## Cumulative Proportion  0.99865 0.99975 1.00000
+\end{verbatim}
+
+\hypertarget{keeping-the-first-9-pcs-will-give-us-85-of-the-variance.}{%
+\subsection{Keeping the first 9 PCs will give us 85\% of the
+variance.}\label{keeping-the-first-9-pcs-will-give-us-85-of-the-variance.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(pc}\OperatorTok{$}\NormalTok{x[,}\DecValTok{1}\OperatorTok{:}\DecValTok{9}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(knor)}
+\NormalTok{nthread <-}\StringTok{ }\DecValTok{4}
+\NormalTok{K =}\StringTok{ }\DecValTok{3}
+\NormalTok{kmeans.out <-}\StringTok{ }\KeywordTok{Kmeans}\NormalTok{(comp, K, }\DataTypeTok{iter.max =} \DecValTok{100}\NormalTok{, }\DataTypeTok{nthread=}\NormalTok{nthread)}
+\KeywordTok{names}\NormalTok{(kmeans.out)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "nrow"    "ncol"    "iters"   "k"       "centers" "cluster" "size"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{palette}\NormalTok{(}\KeywordTok{alpha}\NormalTok{(}\KeywordTok{brewer.pal}\NormalTok{(}\DecValTok{9}\NormalTok{,}\StringTok{'Set1'}\NormalTok{), }\FloatTok{0.5}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(Y, }\DataTypeTok{col=}\NormalTok{kmeans.out}\OperatorTok{$}\NormalTok{cluster, }\DataTypeTok{pch=}\DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-37-1.pdf}
+
+\#What if we don't use PCA?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(knor)}
+\NormalTok{nthread <-}\StringTok{ }\DecValTok{4}
+\NormalTok{K =}\StringTok{ }\DecValTok{3}
+\NormalTok{kmeans2.out <-}\StringTok{ }\KeywordTok{Kmeans}\NormalTok{(}\KeywordTok{scale}\NormalTok{(Xquant), K, }\DataTypeTok{iter.max =} \DecValTok{100}\NormalTok{, }\DataTypeTok{nthread=}\NormalTok{nthread)}
+\KeywordTok{plot}\NormalTok{(Y, }\DataTypeTok{col=}\NormalTok{kmeans2.out}\OperatorTok{$}\NormalTok{cluster, }\DataTypeTok{pch=}\DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{eda_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{frame =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(Y, X, kmeans2.out}\OperatorTok{$}\NormalTok{cluster)}
+\KeywordTok{names}\NormalTok{(frame)[}\KeywordTok{names}\NormalTok{(frame) }\OperatorTok{==}\StringTok{ "npsdat.ParkName"}\NormalTok{] <-}\StringTok{ "ParkName"}
+\KeywordTok{names}\NormalTok{(frame)[}\KeywordTok{names}\NormalTok{(frame) }\OperatorTok{==}\StringTok{ "kmeans2.out.cluster"}\NormalTok{] <-}\StringTok{ "Cluster"}
+\KeywordTok{head}\NormalTok{(frame)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Y States Year         ParkName                 ParkType NPFlag Region
+## 1 4.442651     AK 1995           Denali National Park & Preserve      1 Alaska
+## 2 7.060476     AK 1995           Noatak        National Preserve      0 Alaska
+## 3 3.465736     AK 1995     Kenai Fjords            National Park      1 Alaska
+## 4 6.311735     AK 1995 Cape Krusenstern        National Monument      0 Alaska
+## 5 4.615121     AK 1995       Lake Clark National Park & Preserve      1 Alaska
+## 6 4.189655     AK 1995 Cape Krusenstern        National Monument      0 Alaska
+##   Age MonthName Poverty.Percent..All.Ages Poverty.Percent..Age.0.17
+## 1 104   January                      10.1                      14.8
+## 2  42 September                      10.1                      14.8
+## 3  42  November                      10.1                      14.8
+## 4  42      July                      10.1                      14.8
+## 5  42   January                      10.1                      14.8
+## 6  42  December                      10.1                      14.8
+##   Poverty.Percent..Age.5.17.in.Families Median.Household.Income
+## 1                                  11.2                   42255
+## 2                                  11.2                   42255
+## 3                                  11.2                   42255
+## 4                                  11.2                   42255
+## 5                                  11.2                   42255
+## 6                                  11.2                   42255
+##   Poverty.Percent..Age.0.4 publicAcres privateAcres fees logAcres Cluster
+## 1                     15.7   0.9937221  0.005240054    1 15.61970       1
+## 2                     15.7   0.9942537  0.005564590    0 15.70062       1
+## 3                     15.7   0.9006642  0.070511740    0 13.41451       1
+## 4                     15.7   0.9510997  0.032898824    0 13.38334       2
+## 5                     15.7   0.9259044  0.048065885    0 15.20930       1
+## 6                     15.7   0.9510997  0.032898824    0 13.38334       2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cluster1 =}\StringTok{ }\NormalTok{frame[frame}\OperatorTok{$}\NormalTok{Cluster }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{,]}
+\NormalTok{cluster2 =}\StringTok{ }\NormalTok{frame[frame}\OperatorTok{$}\NormalTok{Cluster }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{,]}
+\NormalTok{cluster3 =}\StringTok{ }\NormalTok{frame[frame}\OperatorTok{$}\NormalTok{Cluster }\OperatorTok{==}\StringTok{ }\DecValTok{3}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unique}\NormalTok{(cluster1}\OperatorTok{$}\NormalTok{States)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] AK AR AZ CA CO FL GA HI ID IN KY MA ME MI MN MO MT ND NM NV OH OR SC SD TX
+## [26] UT VA WA WY
+## 50 Levels: AK AL AR AZ CA CO CT DC FL GA HI IA ID IL IN KS KY LA MA MD ... WY
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(cluster1}\OperatorTok{$}\NormalTok{States))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 29
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unique}\NormalTok{(cluster2}\OperatorTok{$}\NormalTok{States)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] AK AZ CA CO CT FL GA HI IA ID IL IN KS MA MD ME MI MN MO MT NC ND NE NH NJ
+## [26] NY OH OR PA RI SC SD TN TX UT VA VT WA WI WY
+## 50 Levels: AK AL AR AZ CA CO CT DC FL GA HI IA ID IL IN KS KY LA MA MD ... WY
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(cluster2}\OperatorTok{$}\NormalTok{States))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 40
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unique}\NormalTok{(cluster3}\OperatorTok{$}\NormalTok{States)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] AL AR AZ CA DC FL GA ID IL IN KY LA MI MO MS MT NC NM NY OH OK OR RI SC SD
+## [26] TN TX WV
+## 50 Levels: AK AL AR AZ CA CO CT DC FL GA HI IA ID IL IN KS KY LA MA MD ... WY
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(cluster3}\OperatorTok{$}\NormalTok{States))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 28
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{exp}\NormalTok{(cluster1}\OperatorTok{$}\NormalTok{Y))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 87832.22
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(cluster1}\OperatorTok{$}\NormalTok{fees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  1.0000  1.0000  0.7591  1.0000  1.0000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(cluster2}\OperatorTok{$}\NormalTok{fees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.0000  0.0000  0.1944  0.0000  1.0000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(cluster3}\OperatorTok{$}\NormalTok{Region)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Alaska    Intermountain           Midwest  National Capital  
+##                 0             11186              3048              3597 
+##        Northeast      Pacific West         Southeast  
+##              3978              2748              9234
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(cluster3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Y"                                    
+##  [2] "States"                               
+##  [3] "Year"                                 
+##  [4] "ParkName"                             
+##  [5] "ParkType"                             
+##  [6] "NPFlag"                               
+##  [7] "Region"                               
+##  [8] "Age"                                  
+##  [9] "MonthName"                            
+## [10] "Poverty.Percent..All.Ages"            
+## [11] "Poverty.Percent..Age.0.17"            
+## [12] "Poverty.Percent..Age.5.17.in.Families"
+## [13] "Median.Household.Income"              
+## [14] "Poverty.Percent..Age.0.4"             
+## [15] "publicAcres"                          
+## [16] "privateAcres"                         
+## [17] "fees"                                 
+## [18] "logAcres"                             
+## [19] "Cluster"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cluster_summary <-}
+\StringTok{  }\KeywordTok{list}\NormalTok{(}\StringTok{"Vistation"}\NormalTok{ =}
+\StringTok{       }\KeywordTok{list}\NormalTok{(}\StringTok{"min"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{exp}\NormalTok{(Y)),}
+            \StringTok{"max"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{max}\NormalTok{(}\KeywordTok{exp}\NormalTok{(Y)),}
+            \StringTok{"median"}\NormalTok{    =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{median}\NormalTok{(}\KeywordTok{exp}\NormalTok{(Y)),}
+            \StringTok{"mean (sd)"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{mean_sd}\NormalTok{(}\KeywordTok{exp}\NormalTok{(Y))),}
+       \StringTok{"Poverty Percentage"}\NormalTok{ =}
+\StringTok{       }\KeywordTok{list}\NormalTok{(}\StringTok{"min"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{min}\NormalTok{(Poverty.Percent..All.Ages),}
+            \StringTok{"max"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{max}\NormalTok{(Poverty.Percent..All.Ages),}
+            \StringTok{"median"}\NormalTok{    =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{median}\NormalTok{(Poverty.Percent..All.Ages),}
+            \StringTok{"mean (sd)"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{mean_sd}\NormalTok{(Poverty.Percent..All.Ages)),}
+       \StringTok{"Fees"}\NormalTok{ =}
+\StringTok{       }\KeywordTok{list}\NormalTok{(}\StringTok{"min"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{min}\NormalTok{(fees),}
+            \StringTok{"median"}\NormalTok{    =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{median}\NormalTok{(fees),}
+            \StringTok{"max"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{max}\NormalTok{(fees),}
+            \StringTok{"mean (sd)"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{mean_sd}\NormalTok{(fees)),}
+       \StringTok{"Public Acres"}\NormalTok{ =}
+\StringTok{       }\KeywordTok{list}\NormalTok{(}\StringTok{"min"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{min}\NormalTok{(publicAcres),}
+            \StringTok{"median"}\NormalTok{    =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{median}\NormalTok{(publicAcres),}
+            \StringTok{"max"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{max}\NormalTok{(publicAcres),}
+            \StringTok{"mean (sd)"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{mean_sd}\NormalTok{(publicAcres)),}
+       \StringTok{"Acreage"}\NormalTok{ =}\StringTok{ }
+\StringTok{       }\KeywordTok{list}\NormalTok{(}\StringTok{"min"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{exp}\NormalTok{(logAcres)),}
+            \StringTok{"max"}\NormalTok{       =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{max}\NormalTok{(}\KeywordTok{exp}\NormalTok{(logAcres)),}
+            \StringTok{"median"}\NormalTok{    =}\StringTok{ }\ErrorTok{~}\StringTok{ }\KeywordTok{median}\NormalTok{(}\KeywordTok{exp}\NormalTok{(logAcres)),}
+            \StringTok{"mean (sd)"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{mean_sd}\NormalTok{(}\KeywordTok{exp}\NormalTok{(logAcres))),}
+       \StringTok{"Park Region"}\NormalTok{ =}\StringTok{  }
+\StringTok{       }\KeywordTok{list}\NormalTok{(}\StringTok{"Alaska"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{n_perc0}\NormalTok{(ParkType }\OperatorTok{==}\StringTok{ "Alaska"}\NormalTok{),}
+            \StringTok{"Intermountain"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{n_perc0}\NormalTok{(ParkType }\OperatorTok{==}\StringTok{ "Intermountain"}\NormalTok{),}
+            \StringTok{"Midwest"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{n_perc0}\NormalTok{(ParkType }\OperatorTok{==}\StringTok{ "Midwest"}\NormalTok{),}
+            \StringTok{"National Capital"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{n_perc0}\NormalTok{(ParkType }\OperatorTok{==}\StringTok{ "National Capital"}\NormalTok{),}
+            \StringTok{"Pacific West"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{n_perc0}\NormalTok{(ParkType }\OperatorTok{==}\StringTok{ "Pacific West"}\NormalTok{),}
+            \StringTok{"Southeast"}\NormalTok{ =}\StringTok{ }\ErrorTok{~}\StringTok{ }\NormalTok{qwraps2}\OperatorTok{::}\KeywordTok{n_perc0}\NormalTok{(ParkType }\OperatorTok{==}\StringTok{ "Southeast"}\NormalTok{))}
+\NormalTok{       )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary_table}\NormalTok{(cluster1, cluster_summary)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## \begin{tabular}{l|l}
+## \hline
+##  & cluster1 (N = 15,239)\\
+## \hline
+## \bf{Vistation} & ~\\
+## \hline
+## ~~ min & 1\\
+## \hline
+## ~~ max & 1162218\\
+## \hline
+## ~~ median & 35670\\
+## \hline
+## ~~ mean (sd) & 87,832.22 $\pm$ 137,856.76\\
+## \hline
+## \bf{Poverty Percentage} & ~\\
+## \hline
+## ~~ min & 6.9\\
+## \hline
+## ~~ max & 19\\
+## \hline
+## ~~ median & 11.8\\
+## \hline
+## ~~ mean (sd) & 12.25 $\pm$ 2.35\\
+## \hline
+## \bf{Fees} & ~\\
+## \hline
+## ~~ min & 0\\
+## \hline
+## ~~ median & 1\\
+## \hline
+## ~~ max & 1\\
+## \hline
+## ~~ mean (sd) & 0.76 $\pm$ 0.43\\
+## \hline
+## \bf{Public Acres} & ~\\
+## \hline
+## ~~ min & 0.278191143648246\\
+## \hline
+## ~~ median & 0.987281056693915\\
+## \hline
+## ~~ max & 1\\
+## \hline
+## ~~ mean (sd) & 0.91 $\pm$ 0.17\\
+## \hline
+## \bf{Acreage} & ~\\
+## \hline
+## ~~ min & 193.83\\
+## \hline
+## ~~ max & 13175792\\
+## \hline
+## ~~ median & 218223.4\\
+## \hline
+## ~~ mean (sd) & 1,012,649.99 $\pm$ 2,290,021.94\\
+## \hline
+## \bf{Park Region} & ~\\
+## \hline
+## ~~ Alaska & 0 (0)\\
+## \hline
+## ~~ Intermountain & 0 (0)\\
+## \hline
+## ~~ Midwest & 0 (0)\\
+## \hline
+## ~~ National Capital & 0 (0)\\
+## \hline
+## ~~ Pacific West & 0 (0)\\
+## \hline
+## ~~ Southeast & 0 (0)\\
+## \hline
+## \end{tabular}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary_table}\NormalTok{(cluster2, cluster_summary)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## \begin{tabular}{l|l}
+## \hline
+##  & cluster2 (N = 36,030)\\
+## \hline
+## \bf{Vistation} & ~\\
+## \hline
+## ~~ min & 1\\
+## \hline
+## ~~ max & 1600653\\
+## \hline
+## ~~ median & 6274\\
+## \hline
+## ~~ mean (sd) & 36,037.43 $\pm$ 101,596.45\\
+## \hline
+## \bf{Poverty Percentage} & ~\\
+## \hline
+## ~~ min & 5.6\\
+## \hline
+## ~~ max & 15.4\\
+## \hline
+## ~~ median & 11.2\\
+## \hline
+## ~~ mean (sd) & 11.29 $\pm$ 1.74\\
+## \hline
+## \bf{Fees} & ~\\
+## \hline
+## ~~ min & 0\\
+## \hline
+## ~~ median & 0\\
+## \hline
+## ~~ max & 1\\
+## \hline
+## ~~ mean (sd) & 0.19 $\pm$ 0.40\\
+## \hline
+## \bf{Public Acres} & ~\\
+## \hline
+## ~~ min & 0\\
+## \hline
+## ~~ median & 0.94277399425116\\
+## \hline
+## ~~ max & 1\\
+## \hline
+## ~~ mean (sd) & 0.77 $\pm$ 0.32\\
+## \hline
+## \bf{Acreage} & ~\\
+## \hline
+## ~~ min & 1.02\\
+## \hline
+## ~~ max & 6587072.39\\
+## \hline
+## ~~ median & 675.56\\
+## \hline
+## ~~ mean (sd) & 101,389.94 $\pm$ 612,228.79\\
+## \hline
+## \bf{Park Region} & ~\\
+## \hline
+## ~~ Alaska & 0 (0)\\
+## \hline
+## ~~ Intermountain & 0 (0)\\
+## \hline
+## ~~ Midwest & 0 (0)\\
+## \hline
+## ~~ National Capital & 0 (0)\\
+## \hline
+## ~~ Pacific West & 0 (0)\\
+## \hline
+## ~~ Southeast & 0 (0)\\
+## \hline
+## \end{tabular}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary_table}\NormalTok{(cluster3, cluster_summary)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## \begin{tabular}{l|l}
+## \hline
+##  & cluster3 (N = 33,791)\\
+## \hline
+## \bf{Vistation} & ~\\
+## \hline
+## ~~ min & 1\\
+## \hline
+## ~~ max & 1471351\\
+## \hline
+## ~~ median & 10582\\
+## \hline
+## ~~ mean (sd) & 51,375.64 $\pm$ 118,455.87\\
+## \hline
+## \bf{Poverty Percentage} & ~\\
+## \hline
+## ~~ min & 12.6\\
+## \hline
+## ~~ max & 23.9\\
+## \hline
+## ~~ median & 16.5\\
+## \hline
+## ~~ mean (sd) & 16.68 $\pm$ 1.88\\
+## \hline
+## \bf{Fees} & ~\\
+## \hline
+## ~~ min & 0\\
+## \hline
+## ~~ median & 0\\
+## \hline
+## ~~ max & 1\\
+## \hline
+## ~~ mean (sd) & 0.26 $\pm$ 0.44\\
+## \hline
+## \bf{Public Acres} & ~\\
+## \hline
+## ~~ min & 0\\
+## \hline
+## ~~ median & 0.979508275387604\\
+## \hline
+## ~~ max & 1\\
+## \hline
+## ~~ mean (sd) & 0.84 $\pm$ 0.27\\
+## \hline
+## \bf{Acreage} & ~\\
+## \hline
+## ~~ min & 1.11\\
+## \hline
+## ~~ max & 1545710.49\\
+## \hline
+## ~~ median & 793.84\\
+## \hline
+## ~~ mean (sd) & 27,510.66 $\pm$ 118,664.63\\
+## \hline
+## \bf{Park Region} & ~\\
+## \hline
+## ~~ Alaska & 0 (0)\\
+## \hline
+## ~~ Intermountain & 0 (0)\\
+## \hline
+## ~~ Midwest & 0 (0)\\
+## \hline
+## ~~ National Capital & 0 (0)\\
+## \hline
+## ~~ Pacific West & 0 (0)\\
+## \hline
+## ~~ Southeast & 0 (0)\\
+## \hline
+## \end{tabular}
+\end{verbatim}
+
+\end{document}
