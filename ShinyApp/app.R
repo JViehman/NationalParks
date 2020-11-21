@@ -6,7 +6,8 @@ library(plyr)
 library(scales)
 library(lubridate)
 
-nps = read.csv("./NPS_Database.csv")
+nps1 = read.csv("NPS_master_Parks_1990to2019.csv")
+nps = nps1[which(nps1$ParkName != "NA"),]
 nps$fullName = paste(nps$ParkName, " ", nps$ParkType)
 
 # Define UI for application that draws a histogram
@@ -26,7 +27,8 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-    nps = read.csv("C:/Users/Beau/Google Drive (nfindley1@tamu.edu)/STAT 656 - Applied Analytics/Project/national_parks/Data Files/NPS_master_Parks_1990to2019.csv")
+    nps1 = read.csv("NPS_master_Parks_1990to2019.csv")
+    nps = nps1[which(nps1$ParkName != "NA"),]
     nps$fullName = paste(nps$ParkName, " ", nps$ParkType)
     nps$Date <- as.Date(nps$Date)
     
