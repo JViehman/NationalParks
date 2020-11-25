@@ -14,6 +14,8 @@ test     = subset(combined, Year >  2015)
 ```
 
 ```{r}
+
+
 tuneGrid = expand.grid(degree = 1:3, 
                        nprune = c(10,15,20,25,30,40,50))
 number = 5
@@ -27,13 +29,26 @@ marsTune = train(
   tuneGrid = tuneGrid
 )
 marsTune$bestTune
+#result is degree = 2 and nprune = 50
 
 
-
-marsOut = earth(Y ~ ., data = training, degree = 2)
+marsOut = earth(Y ~ ., data = training, degree = 2, nprune = 50)
 summary(marsOut)
 plot(marsOut, which = 3)
 
-MARSvip = vip(marsTune, num_features = 15, bar = FALSE, value = "gcv") + ggtitle("GCV")
+test$MarsPred <- predict(marsOut, newdata = test)
+training$MarsPred <- predict(marsOut, newdata = training)
+
+
+library(vip)
+MARSvip = vip(marsTune, num_features = 20, bar = FALSE, value = "gcv") + ggtitle("GCV") + 
+  theme(plot.title = element_text(hjust = 0.5))
 plot(MARSvip)
+
+save(training, file = "C:/Users/Jason/Downloads/trainingdata.RData")
+save(test, file = "C:/Users/Jason/Downloads/testdata.RData")
+combined <- rbind(training, test)
+save(combined, file = "C:/Users/Jason/Downloads/testdata.RData")
+write.csv(combined, file = "C:/Users/Jason/Downloads/testdata.csv")
+
 ```
