@@ -337,6 +337,8 @@ cluster3 = frame[frame$Cluster == 3,]
 
 ```{r, include = FALSE}
 install.packages("gtsummary")
+install.packages("dummies")
+library(dummies)
 library(gtsummary)
 ```
 ```{r}
@@ -351,4 +353,82 @@ table3 <- tbl_summary(shortclust3)
 table1
 table2
 table3
+```
+
+## Let's model Visits using XGBoost
+
+```{r}
+X$States <- as.factor(X$States)
+X$ParkName <- as.factor(X$ParkName)
+X$ParkType <- as.factor(X$ParkType)
+X$NPFlag <- as.factor(X$NPFlag)
+X$Region <- as.factor(X$Region)
+X$fees <- as.factor(X$fees)
+Xlight = subset(X, select = -c(Poverty.Percent..Age.0.17, Poverty.Percent..Age.0.4, Poverty.Percent..All.Ages, privateAcres))
+Xsparse = dummy.data.frame(Xlight, names = c("States","ParkName", "ParkType", "Region", "MonthName") , sep = ".")
+```
+
+
+```{r, include = FALSE}
+library(xgboost)
+library(readr)
+library(stringr)
+library(caret)
+library(car)
+```
+
+```{r}
+combined <- data.frame(Xsparse, Y)
+combined <- subset(combined, Y != 0)
+training = subset(combined, Year <= 2015)
+test     = subset(combined, Year >  2015)
+Xtrain = data.matrix(training[,1:434])
+Xtest = data.matrix(test[,1:434])
+Ytrain = data.matrix(training["Y"])
+Ytest = data.matrix(test["Y"])
+```
+
+```{r}
+xgb_train = xgb.DMatrix(data = Xtrain, label = Ytrain)
+xgb_test = xgb.DMatrix(data = Xtest, label = Ytest)
+```
+
+```{r}
+xgbc = xgboost(data = xgb_train, gamma = 3, colsample_bytree = 0.75, subsample = 0.5, max.depth = 4, eta = 0.05, nrounds = 1000)
+```
+
+
+```{r}
+pred_y = predict(xgbc, xgb_test)
+mse = mean((Ytest - pred_y)^2)
+mae = caret::MAE(Ytest, pred_y)
+rmse = caret::RMSE(Ytest, pred_y)
+
+cat("MSE: ", mse, "MAE: ", mae, " RMSE: ", rmse)
+```
+
+
+```{r}
+x = 1:length(Ytest)
+plot(x, Ytest, col = "red", type = "l")
+lines(x, pred_y, col = "blue", type = "l")
+legend(x = 1, y = 38,  legend = c("original Ytest", "predicted Ytest"), 
+       col = c("red", "blue"), box.lty = 1, cex = 0.8, lty = c(1, 1))
+```
+
+
+
+```{r}
+test$BoostPred <- predict(xgbc, newdata = xgb_test)
+training$BoostPred <- predict(xgbc, newdata = xgb_train)
+dftest = as.data.frame(as.matrix(test))
+dftrain = as.data.frame(as.matrix(training))
+```
+
+```{r}
+save(dftrain, file = "~/GitHub/national_parks/Data Files/XGBtraining.RData")
+save(dftest, file = "~/GitHub/national_parks/Data Files/XGBtest.RData")
+combined <- rbind(training, test)
+save(combined, file = "~/GitHub/national_parks/Data Files/XGBcombined.RData")
+write.csv(combined, file = "~/GitHub/national_parks/Data Files/XGBtest.csv")
 ```
