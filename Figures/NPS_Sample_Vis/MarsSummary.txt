@@ -1,0 +1,66 @@
+> summary(marsOut)
+Call: earth(formula=Y~., data=training, degree=2, nprune=50)
+
+                                                       coefficients
+(Intercept)                                               14.313658
+StatesHI                                                   1.078891
+StatesMA                                                   2.595164
+ParkNameCumberland Island                                 -2.490893
+ParkNameGolden Gate                                        2.873233
+ParkNameIndependence                                       3.876853
+ParkNameRio Grande                                        -4.903541
+ParkTypeNational Historic Site                            -0.966816
+MonthNameDecember                                         -1.238475
+MonthNameFebruary                                         -1.224770
+MonthNameJanuary                                          -1.382145
+MonthNameMarch                                            -0.712472
+MonthNameNovember                                         -0.891623
+RegionSoutheast                                            1.172535
+h(189-Age)                                                -0.060278
+h(Age-189)                                                -0.310591
+h(13.735-logAcres)                                        -5.073124
+StatesDC * h(13.735-logAcres)                              0.259740
+StatesIL * h(189-Age)                                      0.018947
+StatesMA * h(0.00997783-privateAcres)                   -309.443050
+ParkNameAlibates Flint Quarries * h(189-Age)              -0.021083
+ParkNameCabrillo * h(13.735-logAcres)                      0.337163
+ParkNameCastle Clinton * h(189-Age)                        0.032290
+ParkNameColonial * h(13.735-logAcres)                      0.849106
+ParkNameCuyahoga Valley * h(13.735-logAcres)               1.093761
+ParkNameFort Point * h(13.735-logAcres)                    0.404958
+ParkNameFrederick Douglass * h(189-Age)                   -0.018324
+ParkNameGateway Arch * h(189-Age)                          0.038267
+ParkNameIndiana Dunes * h(189-Age)                         0.021945
+ParkNameIsle Royale * h(189-Age)                          -0.049650
+ParkNameNorth Cascades * h(189-Age)                       -0.026553
+ParkNameSan Antonio Missions * h(13.735-logAcres)          0.378732
+ParkNameSan Francisco Maritime * h(189-Age)                0.026899
+ParkNameValley Forge * h(189-Age)                          0.022117
+ParkTypeNational Battlefield * h(13.735-logAcres)         -0.164826
+ParkTypeNational Historical Park * h(logAcres-7.36056)    -0.989657
+ParkTypeNational Monument * h(Age-134)                     0.337181
+ParkTypeNational Monument * h(134-Age)                    -0.014711
+ParkTypeNational Monument * h(0.787202-publicAcres)        2.539027
+ParkTypeNational Monument * h(publicAcres-0.994669)     -160.811970
+ParkTypeNational Monument * h(5.4848-logAcres)             0.529976
+ParkTypeNational Monument * h(logAcres-12.7089)           -4.744678
+ParkTypeNational Monument & Preserve * h(189-Age)         -0.030881
+ParkTypeNational Park * h(189-Age)                        -0.006215
+ParkTypeNational Recreation Area * h(189-Age)              0.009151
+RegionSoutheast  * h(publicAcres-0.994669)              -179.090036
+h(189-Age) * h(privateAcres-0.00363665)                   -0.010248
+h(Age-8) * h(13.735-logAcres)                              0.025668
+h(189-Age) * h(15.0039-logAcres)                           0.027466
+h(Poverty.Percent..All.Ages-11.2) * h(logAcres-13.735)     1.262598
+
+Selected 50 of 109 terms, and 40 of 433 predictors (nprune=50)
+Termination condition: RSq changed by less than 0.001 at 109 terms
+Importance: logAcres, Age, ParkTypeNational Historic Site, StatesDC, ParkTypeNational Monument, ...
+Number of terms at each degree of interaction: 1 16 33
+GCV 1.339292    RSS 96358.31    GRSq 0.6928643    RSq 0.6939058
+
+
+
+
+
+
