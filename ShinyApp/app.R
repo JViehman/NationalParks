@@ -55,6 +55,7 @@ server <- function(input, output) {
         ggplot(data(), aes(x=Date)) +
                                       geom_line(aes(y= log(RecreationVisits)), color = "black", size = .75) +
                                       geom_line(aes(y= log(Predicted)), color = "red", size = .75) +
+                                      geom_line(aes(y= log(XGBPreds)), color = "purple", size = .75) +
                                       scale_x_date(breaks = "2 years", labels = date_format("%Y")) +
                                       scale_y_continuous(labels = comma) +
                                       theme_bw() + labs(y = "Visits", caption = "Predicted Values in Red, Actual Values in Black") + 
