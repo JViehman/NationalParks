@@ -1,3 +1,4 @@
+
 library(shiny)
 library(tidyverse)
 library(httr)
@@ -5,39 +6,62 @@ library(jsonlite)
 library(plyr)
 library(scales)
 library(lubridate)
+library(dplyr)
 
-nps1 = read.csv("NPS_master_Parks_1990to2019.csv")
-nps = nps1[which(nps1$ParkName != "NA"),]
-nps$fullName = paste(nps$ParkName, " ", nps$ParkType)
+#nps1 = load("~/ibm/NaitonalParks/testdata.RData")
+#nps1 = combined
+#nps = nps1[which(nps1$ParkName != "NA"),]
+#nps$fullName = paste(nps$ParkName, " ", nps$ParkType)
+#nps$RecreationVisits = exp(nps$Y)
+#nps$Predicted = exp(nps$MarsPred)
+#nps$date <- ifelse(substr(nps$MonthName, 1, 3) %in% month.abb,
+#            paste(match(substr(nps$MonthName, 1, 3), month.abb),
+#                  1,
+#                  nps$Year, sep = "/"), NA)
+#nps$Date <-  as.Date(nps$date, format = "%m/%d/%Y")
+#save(nps, file="~/ibm/nps.RData")
+load("~/ibm/nps.RData")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     # Application title
     titlePanel("Time Series of National Parks"),
-
+    
     # Sidebar with a slider input for number of bins 
     selectInput("ParkName", "Park Name", unique(nps$fullName)),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
-        )
+    
+    # Show a plot of the generated distribution
+    mainPanel(
+        plotOutput("distPlot")
+    )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-    nps1 = read.csv("NPS_master_Parks_1990to2019.csv")
-    nps = nps1[which(nps1$ParkName != "NA"),]
-    nps$fullName = paste(nps$ParkName, " ", nps$ParkType)
-    nps$Date <- as.Date(nps$Date)
+    data <- reactive({
+        req(input$ParkName)
+        
+        
+        nps %>%
+            filter(
+                fullName == input$ParkName 
+            )
+        
+    })
     
-    output$distPlot <- renderPlot(ggplot(subset(nps, fullName %in% c(input$ParkName))) +
-                        geom_line(mapping = aes(Date, RecreationVisits, color = ParkName), size = .75) +
-                        scale_x_date(breaks = "2 years", labels = date_format("%Y")) +
-                        scale_y_continuous(labels = comma) +
-                        theme_bw())
-    }
+ 
+    output$distPlot <- renderPlot({
+        ggplot(data(), aes(x=Date)) +
+                                      geom_line(aes(y= log(RecreationVisits)), color = "black", size = .75) +
+                                      geom_line(aes(y= log(Predicted)), color = "red", size = .75) +
+                                      scale_x_date(breaks = "2 years", labels = date_format("%Y")) +
+                                      scale_y_continuous(labels = comma) +
+                                      theme_bw() + labs(y = "Visits", caption = "Predicted Values in Red, Actual Values in Black") + 
+                                      scale_color_manual(values=c("black"= "Actual","red" = "Predicted"))
+        })
 
+  
+}
 # Run the application 
 shinyApp(ui = ui, server = server)
