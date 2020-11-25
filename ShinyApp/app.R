@@ -1,4 +1,3 @@
-
 library(shiny)
 library(tidyverse)
 library(httr)
@@ -19,6 +18,14 @@ library(dplyr)
 #                  1,
 #                  nps$Year, sep = "/"), NA)
 #nps$Date <-  as.Date(nps$date, format = "%m/%d/%Y")
+#save(nps, file="~/ibm/nps.RData")
+#load("~/ibm/nps.RData")
+#load("~/ibm/XGBcombined.RData")
+#xg <- combined[c("BoostPred", "Y", "logAcres", "Age", "fees", "publicAcres", "Year")]
+
+#data <- merge(nps, xg, by=c("Y", "logAcres", "Age", "fees", "publicAcres", "Year")) 
+#data$BoostPred <- exp(data$BoostPred)
+#nps <- data
 #save(nps, file="~/ibm/nps.RData")
 load("~/ibm/nps.RData")
 
@@ -50,19 +57,19 @@ server <- function(input, output) {
         
     })
     
- 
+    
     output$distPlot <- renderPlot({
         ggplot(data(), aes(x=Date)) +
-                                      geom_line(aes(y= log(RecreationVisits)), color = "black", size = .75) +
-                                      geom_line(aes(y= log(Predicted)), color = "red", size = .75) +
-                                      geom_line(aes(y= log(XGBPreds)), color = "purple", size = .75) +
-                                      scale_x_date(breaks = "2 years", labels = date_format("%Y")) +
-                                      scale_y_continuous(labels = comma) +
-                                      theme_bw() + labs(y = "Visits", caption = "Predicted Values in Red, Actual Values in Black") + 
-                                      scale_color_manual(values=c("black"= "Actual","red" = "Predicted"))
-        })
-
-  
+            geom_line(aes(y= log(RecreationVisits)), color = "black", size = .75) +
+            geom_line(aes(y= log(Predicted)), color = "red", size = .75) +
+            geom_line(aes(y= log(BoostPred)), color = "purple", size = .75) +
+            scale_x_date(breaks = "2 years", labels = date_format("%Y")) +
+            scale_y_continuous(labels = comma) +
+            theme_bw() + labs(y = "log(Visits)", caption = "MARS Predicted Values in Red, Actual Values in Black, XGBoost predicted values in purple") + 
+            scale_color_manual(values=c("black"= "Actual","red" = "Predicted"))
+    })
+    
+    
 }
 # Run the application 
 shinyApp(ui = ui, server = server)
