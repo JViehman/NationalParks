@@ -27,7 +27,7 @@ library(dplyr)
 #data$BoostPred <- exp(data$BoostPred)
 #nps <- data
 #save(nps, file="~/ibm/nps.RData")
-load("~/ibm/nps.RData")
+load("~/GitHub/national_parks/ShinyApp/nps.RData")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -60,13 +60,13 @@ server <- function(input, output) {
     
     output$distPlot <- renderPlot({
         ggplot(data(), aes(x=Date)) +
-            geom_line(aes(y= log(RecreationVisits)), color = "black", size = .75) +
-            geom_line(aes(y= log(Predicted)), color = "red", size = .75) +
-            geom_line(aes(y= log(BoostPred)), color = "purple", size = .75) +
+            geom_line(aes(y= log(RecreationVisits), color = "Recreation Visits"), size = .75) +
+            geom_line(aes(y= log(Predicted), color = "Mars Predictions"), size = .75) +
+            geom_line(aes(y= log(BoostPred), color = "XGBoost Predictions"), size = .75) +
             scale_x_date(breaks = "2 years", labels = date_format("%Y")) +
             scale_y_continuous(labels = comma) +
-            theme_bw() + labs(y = "log(Visits)", caption = "MARS Predicted Values in Red, Actual Values in Black, XGBoost predicted values in purple") + 
-            scale_color_manual(values=c("black"= "Actual","red" = "Predicted"))
+            theme_bw() + labs(y = "log(Visits)") + 
+            scale_color_manual(values=c("Recreation Visits"= "black" ,"Mars Predictions" = "red", "XGBoost Predictions" = "purple"))
     })
     
     
