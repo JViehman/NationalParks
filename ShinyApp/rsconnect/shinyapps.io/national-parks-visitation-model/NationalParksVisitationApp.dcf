@@ -1,0 +1,13 @@
+name: NationalParksVisitationApp
+title: NationalParksVisitationApp
+username:
+account: national-parks-visitation-model
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3312417
+bundleId: 3913451
+url: https://national-parks-visitation-model.shinyapps.io/NationalParksVisitationApp/
+when: 1606499988.79358
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: NPS_Database.csv|NPS_master_Parks_1990to2019.csv

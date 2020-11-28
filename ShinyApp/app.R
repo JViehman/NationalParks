@@ -7,27 +7,8 @@ library(scales)
 library(lubridate)
 library(dplyr)
 
-#nps1 = load("~/ibm/NaitonalParks/testdata.RData")
-#nps1 = combined
-#nps = nps1[which(nps1$ParkName != "NA"),]
-#nps$fullName = paste(nps$ParkName, " ", nps$ParkType)
-#nps$RecreationVisits = exp(nps$Y)
-#nps$Predicted = exp(nps$MarsPred)
-#nps$date <- ifelse(substr(nps$MonthName, 1, 3) %in% month.abb,
-#            paste(match(substr(nps$MonthName, 1, 3), month.abb),
-#                  1,
-#                  nps$Year, sep = "/"), NA)
-#nps$Date <-  as.Date(nps$date, format = "%m/%d/%Y")
-#save(nps, file="~/ibm/nps.RData")
-#load("~/ibm/nps.RData")
-#load("~/ibm/XGBcombined.RData")
-#xg <- combined[c("BoostPred", "Y", "logAcres", "Age", "fees", "publicAcres", "Year")]
 
-#data <- merge(nps, xg, by=c("Y", "logAcres", "Age", "fees", "publicAcres", "Year")) 
-#data$BoostPred <- exp(data$BoostPred)
-#nps <- data
-#save(nps, file="~/ibm/nps.RData")
-load("~/GitHub/national_parks/ShinyApp/nps.RData")
+load("nps.RData")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
