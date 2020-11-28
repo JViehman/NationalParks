@@ -366,6 +366,7 @@ X$Region <- as.factor(X$Region)
 X$fees <- as.factor(X$fees)
 Xlight = subset(X, select = -c(Poverty.Percent..Age.0.17, Poverty.Percent..Age.0.4, Poverty.Percent..All.Ages, privateAcres))
 Xsparse = dummy.data.frame(Xlight, names = c("States","ParkName", "ParkType", "Region", "MonthName") , sep = ".")
+Xlight$Date = npsdat$Date
 ```
 
 
@@ -380,6 +381,7 @@ library(car)
 ```{r}
 combined <- data.frame(Xsparse, Y)
 combined <- subset(combined, Y != 0)
+Xlight = subset(Xlight, Y != 0)
 training = subset(combined, Year <= 2015)
 test     = subset(combined, Year >  2015)
 Xtrain = data.matrix(training[,1:434])
@@ -393,8 +395,8 @@ xgb_train = xgb.DMatrix(data = Xtrain, label = Ytrain)
 xgb_test = xgb.DMatrix(data = Xtest, label = Ytest)
 ```
 
-```{r}
-xgbc = xgboost(data = xgb_train, gamma = 3, colsample_bytree = 0.75, subsample = 0.5, max.depth = 4, eta = 0.05, nrounds = 1000)
+```{r, cache = TRUE}
+xgbc = xgboost(data = xgb_train, gamma = 3, colsample_bytree = 0.75, subsample = 0.5, max.depth = 4, eta = 0.05, nrounds = 1500)
 ```
 
 
@@ -410,10 +412,10 @@ cat("MSE: ", mse, "MAE: ", mae, " RMSE: ", rmse)
 
 ```{r}
 x = 1:length(Ytest)
-plot(x, Ytest, col = "red", type = "l")
-lines(x, pred_y, col = "blue", type = "l")
-legend(x = 1, y = 38,  legend = c("original Ytest", "predicted Ytest"), 
-       col = c("red", "blue"), box.lty = 1, cex = 0.8, lty = c(1, 1))
+plot(x, Ytest, col = "darkolivegreen", type = "l")
+lines(x, pred_y, col = "deepskyblue2", type = "l")
+legend(x = 8000, y = 3,  legend = c("Ytest", "XGBoost Predictions"), 
+       col = c("darkolivegreen", "deepskyblue2"), cex = 0.8, lty = c(1, 1))
 ```
 
 
@@ -425,10 +427,42 @@ dftest = as.data.frame(as.matrix(test))
 dftrain = as.data.frame(as.matrix(training))
 ```
 
+
+```{r}
+importance_matrix <- xgb.importance(model = xgbc)
+print(importance_matrix)
+xgb.plot.importance(importance_matrix = importance_matrix, top_n = 15, cex = 0.75, xlab = "Relative Feature Importance")
+```
+
+```{r}
+library(earth)
+```
+
+```{r}
+marsOut = earth(Y ~ ., data = training, degree = 2, nprune = 50)
+summary(marsOut)
+plot(marsOut, which = 3)
+
+test$MarsPred <- predict(marsOut, newdata = test)
+training$MarsPred <- predict(marsOut, newdata = training)
+```
+
+```{r}
+mseM = mean((Ytest - test$MarsPred)^2)
+maeM = caret::MAE(Ytest, test$MarsPred)
+rmseM = caret::RMSE(Ytest, test$MarsPred)
+
+cat("MSE: ", mseM, "MAE: ", maeM, " RMSE: ", rmseM)
+```
 ```{r}
 save(dftrain, file = "~/GitHub/national_parks/Data Files/XGBtraining.RData")
 save(dftest, file = "~/GitHub/national_parks/Data Files/XGBtest.RData")
-combined <- rbind(training, test)
-save(combined, file = "~/GitHub/national_parks/Data Files/XGBcombined.RData")
-write.csv(combined, file = "~/GitHub/national_parks/Data Files/XGBtest.csv")
+```
+```{r}
+nps1 <- rbind(training, test)
+Xlight$BoostPred = nps1$BoostPred
+Xlight$MarsPred = nps1$MarsPred
+nps = Xlight
+save(nps, file = "~/GitHub/national_parks/ShinyApp/nps.RData")
+write.csv(nps, file = "~/GitHub/national_parks/Data Files/XGBtest.csv")
 ```
