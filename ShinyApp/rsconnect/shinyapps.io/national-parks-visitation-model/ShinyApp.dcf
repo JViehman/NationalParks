@@ -5,9 +5,9 @@ account: national-parks-visitation-model
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3317058
-bundleId: 3917285
+bundleId: 3917384
 url: https://national-parks-visitation-model.shinyapps.io/ShinyApp/
-when: 1606604503.28606
+when: 1606607913.93729
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: NPS_Database.csv|NPS_master_Parks_1990to2019.csv
