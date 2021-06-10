@@ -1,7 +1,5 @@
 # National Parks Project
 
-## Aubrey Smiley McAuliffe, Beau Findley, and Jason Viehman
-
 ### Predicting monthly visits to National Parks using a variety of methods
 
 
